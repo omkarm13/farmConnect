@@ -11,7 +11,7 @@ router.get("/", isAuth, cartController.viewCart);
 
 router.put("/update/:id", isAuth, cartController.updateCart);
 
-// router.post("/remove/:vegId", cartController.deleteCart);
+router.delete("/remove/:vegId", isAuth, cartController.deleteCart);
 
 // router.get("/demo", cartController.demo);
 

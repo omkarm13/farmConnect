@@ -11,6 +11,7 @@ const path = require("path");
 const methodOverride = require('method-override');
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
+const orderRouter = require("./routes/order.js");
 const cartRouter = require("./routes/cart.js");
 const vegetableRouter = require("./routes/vegetable.js");
 const reviewRouter = require("./routes/review.js");
@@ -89,7 +90,7 @@ app.use("/vegetables", vegetableRouter);
 app.use("/vegetables/:id/reviews", reviewRouter);
 app.use("/user", userRouter);
 app.use("/cart", cartRouter);
-
+app.use("/order", orderRouter);
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Not Found!"));
