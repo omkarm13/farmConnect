@@ -9,13 +9,13 @@ module.exports.isAuth = async (req, res, next) => {
   try {
     const token = req.cookies.token;
 
-    if (!token){
+    if (!token) {
       req.flash("error", "Please Login!");
       return res.status(403).redirect("/user/login");
     };
     const decodedData = jwt.verify(token, process.env.JWT_SEC);
 
-    if (!decodedData){
+    if (!decodedData) {
       req.flash("error", "Token expired, Please Login Again!");
       return res.status(403).redirect("/user/login");
     };
@@ -27,7 +27,7 @@ module.exports.isAuth = async (req, res, next) => {
 
   } catch (error) {
     req.flash("error", "You must be logged in!");
-      return res.redirect("/login");
+    return res.redirect("/login");
   }
 };
 
@@ -38,14 +38,14 @@ module.exports.isOwner = async (req, res, next) => {
   let vegetable = await Vegetable.findById(id);
 
   const token = req.cookies.token;
-  if (!token){
+  if (!token) {
     req.flash("error", "Please Login!");
     return res.status(403).redirect("/user/login");
   };
 
   const decodedData = jwt.verify(token, process.env.JWT_SEC);
 
-  if (!decodedData){
+  if (!decodedData) {
     req.flash("error", "Token expired, Please Login Again!");
     return res.status(403).redirect("/user/login");
   };
@@ -54,7 +54,7 @@ module.exports.isOwner = async (req, res, next) => {
 
   // let currUser = await User.findById(decodedData.id);
 
-  if (!vegetable.owner._id.equals(decodedData.id)){
+  if (!vegetable.owner._id.equals(decodedData.id)) {
     req.flash("error", "You don't have permission!");
     return res.redirect(`/vegetables/${id}`);
   };
@@ -98,9 +98,9 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 
 module.exports.setCurrUser = (req, res, next) => {
   const token = req.cookies.token;
-  
+
   if (!token) {
-    res.locals.currUser =undefined;
+    res.locals.currUser = undefined;
     return next();
   }
 
@@ -115,5 +115,36 @@ module.exports.setCurrUser = (req, res, next) => {
     console.error('Error verifying token:', error);
     req.flash("error", "You must be logged in!");
     return res.status(401).redirect(`/vegetables`);
+  }
+};
+
+
+module.exports.isAdminAuth = async (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+    // console.log(token);
+
+    if (!token) {
+      req.flash("error", "Unauthorized Please");
+      return res.status(403).redirect("/admin-login");
+    };
+    const decodedData = jwt.verify(token, process.env.JWT_SEC);
+
+    if (decodedData.role !== "admin") {
+      req.flash("error", "Unauthorized Please Login!");
+      return res.status(403).redirect("/admin-login");
+    }
+    next();
+
+
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Session expired. Please log in again." });
+    }
+    res.status(500).json({ message: "Authorization error. Please log in." });
+
+
+
+
   }
 };

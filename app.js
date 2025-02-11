@@ -16,6 +16,7 @@ const cartRouter = require("./routes/cart.js");
 const vegetableRouter = require("./routes/vegetable.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js"); 
+const adminRouter = require("./routes/admin.js"); 
 
 const { setCurrUser } = require("./middleware.js");
 
@@ -91,6 +92,7 @@ app.use("/vegetables/:id/reviews", reviewRouter);
 app.use("/user", userRouter);
 app.use("/cart", cartRouter);
 app.use("/order", orderRouter);
+app.use("/admin", adminRouter);
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Not Found!"));
