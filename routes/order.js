@@ -8,13 +8,13 @@ const vegetableController = require("../controllers/vegetables.js");
 const Order = require("../models/order.js");
 const orderController = require("../controllers/orders.js");
 
-const { isAuth } = require("../middleware.js");
+const { isAuth, isCustomer } = require("../middleware.js");
 
 
-router.post("/place", isAuth, orderController.placeOrder);
+router.post("/place", isAuth, isCustomer, orderController.placeOrder);
 
-router.get("/", isAuth, orderController.showOrder);
+router.get("/", isAuth, isCustomer, orderController.showOrder);
 
-router.get("/:id", isAuth, vegetableController.showVegetable);
+// router.get("/:id", isAuth, isCustomer, vegetableController.showVegetable);
 
 module.exports = router;

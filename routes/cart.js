@@ -3,15 +3,15 @@ const router = express.Router();
 const cartController = require("../controllers/carts.js");
 const Cart = require("../models/cart.js");
 const Vegetable = require("../models/vegetable");
-const { isAuth } = require("../middleware.js");
+const { isAuth, isCustomer } = require("../middleware.js");
 
-router.post('/add/:vegId', isAuth, cartController.addCart);
+router.post('/add/:vegId', isAuth, isCustomer, cartController.addCart);
 
-router.get("/", isAuth, cartController.viewCart);
+router.get("/", isAuth, isCustomer, cartController.viewCart);
 
-router.put("/update/:id", isAuth, cartController.updateCart);
+router.put("/update/:id", isAuth, isCustomer, cartController.updateCart);
 
-router.delete("/remove/:vegId", isAuth, cartController.deleteCart);
+router.delete("/remove/:vegId", isAuth, isCustomer, cartController.deleteCart);
 
 // router.get("/demo", cartController.demo);
 

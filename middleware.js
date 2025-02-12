@@ -128,13 +128,13 @@ module.exports.isAdminAuth = async (req, res, next) => {
 
     if (!token) {
       req.flash("error", "Unauthorized Please");
-      return res.status(403).redirect("/admin-login");
+      return res.status(403).redirect("/admin/login");
     };
     const decodedData = jwt.verify(token, process.env.JWT_SEC);
 
     if (decodedData.role !== "admin") {
       req.flash("error", "Unauthorized Please Login!");
-      return res.status(403).redirect("/admin-login");
+      return res.status(403).redirect("/admin/login");
     }
     next();
 
@@ -149,4 +149,66 @@ module.exports.isAdminAuth = async (req, res, next) => {
 
 
   }
+};
+
+
+//roles auth
+module.exports.isFarmer = async(req, res, next) => {
+
+  const token = req.cookies.token;
+  // console.log(token);
+
+  if (!token) {
+    req.flash("error", "Unauthorized Please");
+    return res.status(403).redirect("/user/login");
+  };
+  const decodedData = jwt.verify(token, process.env.JWT_SEC);
+  // console.log(decodedData);
+
+  if (decodedData.role !== "farmer") {
+    req.flash("error", "Unauthorized Access!");
+    return res.status(403).redirect("/vegetables");
+  }
+  next();
+};
+
+
+module.exports.isCustomer = async(req, res, next) => {
+
+
+  const token = req.cookies.token;
+  // console.log(token);
+
+  if (!token) {
+    req.flash("error", "Unauthorized Please");
+    return res.status(403).redirect("/user/login");
+  };
+  const decodedData = jwt.verify(token, process.env.JWT_SEC);
+  // console.log(decodedData);
+
+  if (decodedData.role !== "customer") {
+    req.flash("error", "Unauthorized Access!");
+    return res.status(403).redirect("/vegetables");
+  }
+  next();
+};
+
+
+module.exports.isdeliveryBoy = async(req, res, next) => {
+
+  const token = req.cookies.token;
+  // console.log(token);
+
+  if (!token) {
+    req.flash("error", "Unauthorized Please");
+    return res.status(403).redirect("/user/login");
+  };
+  const decodedData = jwt.verify(token, process.env.JWT_SEC);
+  // console.log(decodedData);
+
+  if (decodedData.role !== "delivery_boy") {
+    req.flash("error", "Unauthorized Access!");
+    return res.status(403).redirect("/delivery/orders");
+  }
+  next();
 };
