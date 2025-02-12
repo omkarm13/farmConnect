@@ -46,7 +46,25 @@
                     </li>
                     <% } %>
 
-                <% if (currUser) { %>
+                    <% if (currUser && roles=='admin') { %>
+                        <li class="nav-item">
+                            <a class="nav-link text-success" href="/admin/orders">
+                                <i class="fa-solid fa-list-check"></i> ManageOrders
+                            </a>
+                        </li>
+                        <% } %>
+
+                        <% if (currUser && roles=='delivery_boy') { %>
+                            <li class="nav-item">
+                                <a class="nav-link text-success" href="/delivery/orders">
+                                    <i class="fa-solid fa-truck"></i> Delivery
+                                </a>
+                            </li>
+                            <% } %>
+
+                        <!-- default -->
+
+                <% if (currUser && roles!=='admin') { %>
                 <!-- Profile Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-success" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -59,7 +77,14 @@
                         <li><a class="dropdown-item text-danger" href="/user/logout">Logout</a></li>
                     </ul>
                 </li>
+                <% } else if(currUser && roles=='admin'){ %>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/admin/logout"><i class="fa-solid fa-sign-in-alt"></i> Logout</a>
+                    </li>
                 <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="/admin/login"><i class="fa-solid fa-lock"></i> Admin</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-success" href="/user/register"><i class="fa-solid fa-user-plus"></i></i> Register</a>
                 </li>

@@ -108,6 +108,8 @@ module.exports.setCurrUser = (req, res, next) => {
     // Verify the token
     const decodedData = jwt.verify(token, process.env.JWT_SEC);
     // console.log(decodedData);
+    // console.log(decodedData.id);
+    // console.log(decodedData.role);
     res.locals.currUser = decodedData.id;
     res.locals.roles = decodedData.role;
     next();

@@ -8,6 +8,9 @@ const { isAuth, isAdminAuth} = require("../middleware.js");
 router.get("/login", adminController.adminForm);
 router.post("/login", adminController.adminLogin);
 
+router.get("/orders", isAdminAuth, adminController.viewOrders);
+router.post("/orders/:id/assign", isAdminAuth, adminController.assignOrders);
+
 
 router.get("/logout",isAdminAuth, adminController.logoutAdmin);
 

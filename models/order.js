@@ -10,7 +10,16 @@ const OrderSchema = new mongoose.Schema({
         }
     ],
     totalPrice: { type: Number, required: true },
-    status: { type: String, default: "Pending" },
+    status: {
+        type: String,
+        enum: ["Pending", "Assigned", "Out for Delivery", "Delivered"],
+        default: "Pending"
+    },
+    assignedTo: {
+        type: Schema.Types.ObjectId,
+        ref: "User", //  delivery_boy
+        default: null
+    },
     createdAt: { type: Date, default: Date.now }
 });
 
