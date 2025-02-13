@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const Review = require("./review.js");
 
 const vegetableSchema = new Schema({
-    title:{
+    title: {
         type: String,
         required: true,
     },
@@ -11,12 +11,21 @@ const vegetableSchema = new Schema({
     image: {
        url: String,
        filename: String,
-      },
+    },
     price: Number,
     location: String,
-    country: String,
+    category: {
+      type: String,
+      enum: ['roots', 'leaves', 'pods', 'flowers'],
+      required: true,
+    },
+    quantity: {  // Add stock quantity
+      type: Number,
+      required: true,
+      min: 0  // Ensure stock cannot be negative
+    },
     reviews: [
-      {type: Schema.Types.ObjectId, ref:"Review"}
+      { type: Schema.Types.ObjectId, ref: "Review" }
     ],
     owner: {
       type: Schema.Types.ObjectId,
@@ -24,10 +33,10 @@ const vegetableSchema = new Schema({
     },
 });
 
-vegetableSchema.post("findOneAndDelete", async(vegetable)=>{
-  console.log("newdelete");
-  if(vegetable){
-    await Review.deleteMany({_id: {$in: vegetable.reviews}})
+// Middleware to delete reviews when a vegetable is deleted
+vegetableSchema.post("findOneAndDelete", async(vegetable) => {
+  if (vegetable) {
+    await Review.deleteMany({ _id: { $in: vegetable.reviews } });
   }
 });
 
