@@ -20,7 +20,11 @@ body {
     /* color: #fe424d; */
     font-size: 2rem;
 }
-
+.see-btn{
+    background-color: rgb(25, 135, 84) !important;
+    border: none !important;
+    border-left: 500px!important;
+}
 .nav-link {
     color: #222222 !important;
 }

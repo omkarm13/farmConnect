@@ -30,9 +30,20 @@
                 <div class="invalid-feedback">Please enter valid price!</div>
             </div>
             <div class="mb-3 col-md-8">
-                <label for="country" class="form-label">Country</label>
-                <input type="text" name="country" placeholder="India" class="form-control" required>
+                <label for="category" class="form-label">Category</label>
+                <select class="form-control" id="category" name="category" required>
+                    <option value="" disabled>Select Category</option>
+                    <option value="roots">Roots</option>
+                    <option value="leaves">Leaves</option>
+                    <option value="pods">Pods</option>
+                    <option value="flowers">Flowers</option>
+                </select>
                 <div class="invalid-feedback">Please enter country!</div>
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" name="quantity" cols="30" rows="10" class="form-control" required>
+                    <div class="invalid-feedback">Please enter Quantity!</div>
+                </div>
             </div>
         </div>
         

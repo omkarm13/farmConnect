@@ -1,22 +1,27 @@
 <% layout("/layouts/boilerplate.ejs") %>
   <div class="mt-3">
-    <h2>All vegetables</h2><br>
+    <h2>All Vegetables</h2><br>
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xs-1">
-      <% for(vegetable of allVegetables){ %>
-        <a href="/vegetables/<%= vegetable._id %>" class="vegetable-link">
-          <div class="card col vegetable-card">
-            <img src="<%= vegetable.image.url %>" class="card-img-top" alt="vegetable_img">
-            <div class="card-img-overlay"></div>
-            <div class="card-body">
-              <p class="card-text">
+      <% for(let vegetable of allVegetables) { %>
+        <div class="col mb-4">
+          <div class="card shadow-sm border rounded-3 p-2" style="width: 18rem;">
+            <a href="/vegetables/<%= vegetable._id %>">
+              <img src="<%= vegetable.image.url %>" class="card-img-top p-2" alt="vegetable_img">
+            </a>
+            <div class="card-body p-3">
+              <h5 class="card-title">
                 <b>
-                  <%= vegetable.title %>
-                </b><br>
-                &#8377;<%= vegetable.price.toLocaleString("en-IN") %> / kg
-              </p>
+                  <a href="/vegetables/<%= vegetable._id %>" class="vegetable-link text-decoration-none">
+                    <%= vegetable.title %>
+                  </a>
+                </b>
+                <div><h6>Quantity: <%=vegetable.quantity%></h6></div>
+              </h5>
+              <p class="card-text mt-2">&#8377;<%= vegetable.price.toLocaleString("en-IN") %> / kg</p>
+              <a href="/vegetables/<%= vegetable._id %>" class="btn btn-primary mt-2 see-btn">See Details</a>
             </div>
           </div>
-          <% } %>
+        </div>
+      <% } %>
     </div>
-    </a>
   </div>
