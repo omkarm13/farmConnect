@@ -24,10 +24,10 @@ const { setCurrUser } = require("./middleware.js");
 const cookieParser = require('cookie-parser');
 
 // const MONGO_URL = 'mongodb://127.0.0.1:27017/passenger';
-const ATLAS_URL = process.env.ATLAS_DB_URL;
+const MONGO_URL = 'mongodb://127.0.0.1:27017/farmconect';
 
 async function main() {
-    await mongoose.connect(ATLAS_URL);
+    await mongoose.connect(MONGO_URL);
 }
 
 main()
