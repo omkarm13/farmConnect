@@ -39,18 +39,22 @@
                     <option value="flowers">Flowers</option>
                 </select>
                 <div class="invalid-feedback">Please enter country!</div>
-                <div class="mb-3">
-                    <label for="quantity" class="form-label">Quantity</label>
-                    <input type="number" name="quantity" cols="30" rows="10" class="form-control" required>
-                    <div class="invalid-feedback">Please enter Quantity!</div>
-                </div>
+                
             </div>
         </div>
         
-        <div class="mb-3"> 
-            <label for="location" class="form-label">Location</label>
-            <input type="text" name="location" placeholder="Pune Maharashtra" class="form-control" required>
-            <div class="invalid-feedback">Please enter location!</div>
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="quantity" class="form-label">Quantity</label>
+                <input type="number" name="quantity" value="1" min="1" placeholder="1" cols="30" rows="10" class="form-control" required>
+                <div class="invalid-feedback">Please enter Quantity!</div>
+            </div>
+
+            <div class="mb-3 col-md-8"> 
+                <label for="location" class="form-label">Location</label>
+                <input type="text" name="location" placeholder="Pune Maharashtra" class="form-control" required>
+                <div class="invalid-feedback">Please enter location!</div>
+            </div>
         </div>
         
         <button class="btn btn-dark add-btn mt-3">Add</button>

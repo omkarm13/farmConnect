@@ -18,10 +18,14 @@
 
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label for="image" class="form-label">Image URL</label>
-                    <input type="text" name="image" value="<%= vegetable.image.url %>" class="form-control" required>
+                    <input type="text" name="image" value="<%= vegetable.image.url %>" class="form-control">
                     <div class="invalid-feedback">Please enter valid url!</div>
+                </div> -->
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image Upload</label>
+                    <input type="file" name="image" placeholder="Enter URL Link" class="form-control">
                 </div>
 
                 <div class="row">
@@ -31,16 +35,31 @@
                     <div class="invalid-feedback">Please enter price!</div>
                     </div>
                     <div class="mb-3 col-md-8">
-                        <label for="country" class="form-label">Country</label>
-                        <input type="text" name="country" value="<%= vegetable.country %>" class="form-control" required>
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-control" id="category" name="category" required>
+                            <option value="" disabled><%=vegetable.category%> </option>
+                            <option value="roots">Roots</option>
+                            <option value="leaves">Leaves</option>
+                            <option value="pods">Pods</option>
+                            <option value="flowers">Flowers</option>
+                        </select>
                         <div class="invalid-feedback">Please enter country!</div>
+                        
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="location" class="form-label">Location</label>
-                    <input type="text" name="location" value="<%= vegetable.location %>" class="form-control" required>
-                    <div class="invalid-feedback">Please enter location!</div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" name="quantity" min="1" value="<%=vegetable.quantity%>" cols="30" rows="10" class="form-control" required>
+                        <div class="invalid-feedback">Please enter Quantity!</div>
+                    </div>
+
+                    <div class="mb-3 col-md-8">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" name="location" value="<%= vegetable.location %>" class="form-control" required>
+                        <div class="invalid-feedback">Please enter location!</div>
+                    </div>
                 </div>
 
                 <button class="btn btn-dark add-btn mt-3">Update</button><br><br>

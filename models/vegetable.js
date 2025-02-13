@@ -22,7 +22,7 @@ const vegetableSchema = new Schema({
     quantity: {  // Add stock quantity
       type: Number,
       required: true,
-      min: 0  // Ensure stock cannot be negative
+      min: 1  // Ensure stock cannot be negative
     },
     reviews: [
       { type: Schema.Types.ObjectId, ref: "Review" }
