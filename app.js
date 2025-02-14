@@ -83,7 +83,8 @@ app.use(setCurrUser);
 //ROOT
 app.get("/", (req, res) => {
     // res.send("Root");
-    res.redirect("/vegetables");
+    // res.redirect("/vegetables");
+    res.render("vegetables/home.ejs");
 });
 
 
