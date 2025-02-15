@@ -1,17 +1,20 @@
 const Order = require("../models/order.js");
 const Cart = require("../models/cart.js");
 const Vegetable = require("../models/vegetable.js");
+const DeliveryBoy = require("../models/deliveryBoy.js"); // Add the DeliveryBoy model
 const TryCatch = require("../utils/TryCatch.js");
 
 // ✅ Show all orders for the user
 const showOrder = TryCatch(async (req, res) => {
-    let orders = await Order.find({ user: req.user._id }).populate("items.vegetable");
+    let orders = await Order.find({ user: req.user._id }).populate("items.vegetable").populate("assignedTo");
     res.render("order/index.ejs", { orders });
 });
 
 // ✅ Get a specific order by ID
 const getOrderById = TryCatch(async (req, res) => {
-    let order = await Order.findById(req.params.id).populate("items.vegetable");
+    let order = await Order.findById(req.params.id)
+        .populate("items.vegetable")
+        .populate("assignedTo"); // Include assigned delivery boy info
 
     if (!order) {
         req.flash("error", "Order not found!");
@@ -66,7 +69,8 @@ const placeOrder = TryCatch(async (req, res) => {
     let newOrder = new Order({
         user: req.user._id,
         items: cart.items,
-        totalPrice
+        totalPrice,
+        status: "Pending", // Set initial status as "Pending"
     });
 
     await newOrder.save();
@@ -112,10 +116,77 @@ const cancelOrder = TryCatch(async (req, res) => {
     res.redirect("/order");
 });
 
+// ✅ Assign a delivery boy to an order (Admin Only)
+const assignDeliveryBoy = TryCatch(async (req, res) => {
+    let { deliveryBoyId } = req.body;
+
+    let order = await Order.findById(req.params.id);
+
+    if (!order) {
+        req.flash("error", "Order not found!");
+        return res.redirect("/order");
+    }
+
+    let deliveryBoy = await DeliveryBoy.findById(deliveryBoyId);
+
+    if (!deliveryBoy) {
+        req.flash("error", "Delivery boy not found!");
+        return res.redirect("/order");
+    }
+
+    // Assign the delivery boy and update the order status
+    order.assignedTo = deliveryBoy._id;
+    order.status = "Assigned"; // Change the status to "Assigned"
+    await order.save();
+
+    req.flash("success", "Delivery boy assigned successfully!");
+    res.redirect(`/order/${order._id}`);
+});
+
+// ✅ Update order status to "Out for Delivery"
+const markOrderOutForDelivery = TryCatch(async (req, res) => {
+    let order = await Order.findById(req.params.id);
+
+    if (!order) {
+        req.flash("error", "Order not found!");
+        return res.redirect("/order");
+    }
+
+    order.status = "Out for Delivery"; // Update status
+    await order.save();
+
+    req.flash("success", "Order marked as out for delivery!");
+    res.redirect(`/order/${order._id}`);
+});
+
+// ✅ Update order status to "Delivered"
+const markOrderAsDelivered = TryCatch(async (req, res) => {
+    let order = await Order.findById(req.params.id);
+
+    if (!order) {
+        req.flash("error", "Order not found!");
+        return res.redirect("/order");
+    }
+
+    order.status = "Delivered"; // Update status
+    await order.save();
+
+    req.flash("success", "Order marked as delivered!");
+    res.redirect(`/order/${order._id}`);
+});
+// controllers/orders.js
+module.exports.someFunction = (req, res) => {
+    // Your logic here
+    res.send("Some response");
+};
+
 // ✅ Export all functions properly
 module.exports = {
     placeOrder,
     showOrder,
     getOrderById,
-    cancelOrder
+    cancelOrder,
+    assignDeliveryBoy,
+    markOrderOutForDelivery,
+    markOrderAsDelivered,
 };

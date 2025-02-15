@@ -18,6 +18,7 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js"); 
 const adminRouter = require("./routes/admin.js"); 
 const deliveryBoyRouter = require("./routes/deliveryBoy.js"); 
+app.use(express.static(path.join(__dirname, "/public")));
 
 const { setCurrUser } = require("./middleware.js");
 
