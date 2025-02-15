@@ -1,4 +1,6 @@
 const User = require("../models/user.js");
+const Vegetable = require("../models/vegetable.js");
+const Review = require("../models/review.js");
 
 module.exports.createReview = async(req, res)=>{
     let vegetable = await Vegetable.findById(req.params.id);
