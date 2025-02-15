@@ -96,7 +96,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 }
 
 
-module.exports.setCurrUser = (req, res, next) => {
+module.exports.setCurrUser = async(req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
@@ -112,6 +112,10 @@ module.exports.setCurrUser = (req, res, next) => {
     // console.log(decodedData.role);
     res.locals.currUser = decodedData.id;
     res.locals.roles = decodedData.role;
+
+    // let user = await User.findById(decodedData.id);
+    // res.locals.user = user;
+
     next();
   } catch (error) {
     console.error('Error verifying token:', error);

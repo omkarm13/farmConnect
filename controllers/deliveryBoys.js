@@ -5,6 +5,11 @@ const TryCatch = require("../utils/TryCatch.js");
 
 module.exports.viewOrder =  TryCatch(async (req, res) => {
     const orders = await Order.find({ assignedTo: req.user._id }).populate("user").populate("items.vegetable");
+    // for (order of orders){
+    //     console.log(order.items);
+    // };
+    // console.log(orders);
+    // res.send("ok");
     res.render("delivery/orders.ejs", { orders });
 });
 
