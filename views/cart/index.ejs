@@ -15,6 +15,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
+            <% } %>
             <tbody>
                 <% let grandTotal = 0; %>
                 <% for (let cartItem of cart.items) { %>
@@ -44,41 +45,5 @@
         </table>
 
         <h4><b>Grand Total: ₹<%= grandTotal.toLocaleString("en-IN") %></b></h4>
-
-        <!-- Razorpay Payment Button -->
-        <button id="pay-now" class="btn btn-success">Proceed to Payment</button>
-
-    <% } else { %>
-        <p>Your cart is empty.</p>
-        <a href="/vegetables" class="btn btn-primary">Continue Shopping</a>
-    <% } %>
-</div>
-
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-    document.getElementById("pay-now").addEventListener("click", function () {
-        var options = {
-            "key": "<%= process.env.RAZORPAY_KEY %>", // ✅ Replace with your Razorpay API key
-            "amount": <%= grandTotal * 100 %>, // ✅ Amount in paise (multiply by 100)
-            "currency": "INR",
-            "name": "Farm Connect",
-            "description": "Purchase Vegetables",
-            "image": "/images/logo.png", // ✅ Change to your logo path
-            "handler": function (response) {
-                alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-                window.location.href = "/vegetables"; // ✅ Redirect after successful payment
-            },
-            "prefill": {
-                "name": "<%= user ? user.name : '' %>", // ✅ Prefill with user details
-                "email": "<%= user ? user.email : '' %>",
-                "contact": "<%= user ? user.phone : '' %>"
-            },
-            "theme": {
-                "color": "#28a745"
-            }
-        };
-
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
-    });
+        <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_Pvzyq92eB3oQGA" async> </script> </form>
 </script>
