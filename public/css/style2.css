@@ -140,7 +140,7 @@
     justify-content: center;
     text-align: center;
     font-size: 60px;
-    color: #333; /* Dark text color */
+    color:#3e8e41; /* Dark text color */
     margin: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
@@ -467,4 +467,60 @@
     background-color: rgb(25, 135, 84) !important;
     border: none !important;
     border-left: 500px!important;
+}
+.text{
+ padding-left: 5%;
+ padding-right: 5%;
+ padding-top: 3%;
+ padding-bottom: 3%;
+}
+.image{
+  height: 280px;
+  width: 350px;
+}
+/* Navbar Button Styling */
+.navbar .nav-buttons button {
+  margin-left: 1rem;
+  background-color: #28a745; /* Greenish background color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.navbar .nav-buttons button:hover {
+  background-color: #218838; /* Darker green when hovered */
+  transform: scale(1.05); /* Slight zoom effect for hover */
+}
+.fa-lock{
+  color: #3e8e41 !important;
+  padding-right: 2px !important;
+  opacity: 0.7 !important;
+}
+.fa-user-plus{
+  color: #3e8e41 !important;
+  padding-right: 2px !important;
+  opacity: 0.7 !important;
+}
+.fa-sign-in-alt{
+  color: #3e8e41 !important;
+  padding-right: 2px !important;
+  opacity: 0.7 !important;
+}
+.nav-item:hover{
+  opacity: 1;
+}
+/* Footer Styles */
+.fl{
+  color: #333!important;
+}
+.footer{
+  width: 100% !important;
+  margin-left: 0% !important;
+}
+.text-muted{
+  color: white !important;
+  
 }
