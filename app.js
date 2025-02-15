@@ -18,6 +18,7 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js"); 
 const adminRouter = require("./routes/admin.js"); 
 const deliveryBoyRouter = require("./routes/deliveryBoy.js"); 
+const helpRouter = require("./routes/help.js"); 
 app.use(express.static(path.join(__dirname, "/public")));
 
 const { setCurrUser } = require("./middleware.js");
@@ -96,6 +97,7 @@ app.use("/cart", cartRouter);
 app.use("/order", orderRouter);
 app.use("/admin", adminRouter);
 app.use("/delivery", deliveryBoyRouter);
+app.use("/help", helpRouter);
 
 
 app.all("*", (req, res, next) => {
