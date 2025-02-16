@@ -39,7 +39,7 @@ module.exports.viewCart = TryCatch(async (req, res) => {
     let cart = await Cart.findOne({ user: req.user._id }).populate("items.vegetable");
     // console.log(cart);
     // res.send("ok");
-    res.render("cart/index.ejs", { cart });
+    res.render("cart/index2.ejs", { cart });
 });
 
 // Remove item cart
