@@ -20,6 +20,7 @@ const userSchema = new Schema({
       enum: ['farmer', 'customer', 'delivery_boy'],
       required: true,
     },
+    address: String,
   },
   {
     timestamps: true,
