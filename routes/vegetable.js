@@ -24,7 +24,7 @@ router.get("/new", isAuth, isFarmer, vegetableController.newVegetable);
 router.route("/:id")
 .get(wrapAsync(vegetableController.showVegetable))
 .put(isAuth, isFarmer, isOwner, wrapAsync(vegetableController.updateVegetable))
-.delete(isAuth, isFarmer, isOwner, wrapAsync(vegetableController.deleteVegetable));
+// .delete(isAuth, isFarmer, isOwner, wrapAsync(vegetableController.deleteVegetable));
 
 // //Edit Route
 router.get("/:id/edit", isAuth, isFarmer, isOwner, wrapAsync(vegetableController.editVegetable));

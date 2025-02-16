@@ -1,16 +1,51 @@
 
 const Order = require("../models/order.js");
 const TryCatch = require("../utils/TryCatch.js");
+const axios = require("axios");
 
+// let MAPTILER_API_KEY = process.env.MAP_API;
 
-module.exports.viewOrder =  TryCatch(async (req, res) => {
-    const orders = await Order.find({ assignedTo: req.user._id }).populate("user").populate("items.vegetable");
-    // for (order of orders){
-    //     console.log(order.items);
-    // };
-    // console.log(orders);
-    // res.send("ok");
-    res.render("delivery/orders.ejs", { orders });
+// module.exports.viewOrder =  TryCatch(async (req, res) => {
+//     const orders = await Order.find({ assignedTo: req.user._id }).populate("user").populate("items.vegetable");
+//     // for (order of orders){
+//     //     console.log(order.items);
+//     // };
+//     // console.log(orders);
+//     // res.send("ok");
+//     res.render("delivery/orders.ejs", { orders });
+// });
+module.exports.viewOrder = TryCatch(async (req, res) => {
+    const orders = await Order.find({ assignedTo: req.user._id })
+        .populate("user")
+        .populate("items.vegetable");
+
+    let customerLocations = [];
+
+    // Filter out orders that are already delivered
+    const pendingOrders = orders.filter(order => order.status !== "Delivered");
+
+    // Fetch coordinates for pending orders only
+    const locationPromises = pendingOrders.map(async (order) => {
+        const address = order.user.address; // Assuming order.user.address contains the city name
+        if (!address) return null;
+
+        try {
+            const response = await axios.get(`https://api.maptiler.com/geocoding/${encodeURIComponent(address)}.json?key=${process.env.MAP_API}`);
+            if (response.data && response.data.features.length > 0) {
+                const [lng, lat] = response.data.features[0].geometry.coordinates;
+                return { name: order.user.name, coords: [lng, lat] };
+            }
+        } catch (error) {
+            console.error(`Error fetching coordinates for ${address}:`, error);
+        }
+        return null;
+    });
+
+    // Wait for all API calls to complete
+    const resolvedLocations = await Promise.all(locationPromises);
+    customerLocations = resolvedLocations.filter(loc => loc !== null); // Remove null values
+
+    res.render("delivery/orders.ejs", { orders, customerLocations });
 });
 
 //order status 

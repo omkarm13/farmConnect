@@ -8,9 +8,9 @@ module.exports.registerForm = (req, res) => {
 };
 
 module.exports.registerUser = TryCatch(async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, address } = req.body;
 
-    if (!name || !email || !password || !role) {
+    if (!name || !email || !password || !role || !address) {
         req.flash("error", "All fields are required!");
         return res.redirect("/user/register");
       };
@@ -29,7 +29,10 @@ module.exports.registerUser = TryCatch(async (req, res) => {
         email,
         password: hashPassword,
         role: role,
+        address,
     });
+
+    // console.log(user);
 
     generateToken(user, res);
 
