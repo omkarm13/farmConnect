@@ -15,7 +15,8 @@
                     <%= vegetable.title %>
                   </a>
                 </b>
-                <div><h6>Available Qty: <%=vegetable.quantity%> </h6></div>
+                <div><h6>Available Qty: <%=vegetable.quantity%> </h6>
+                <h6>Category: <%=vegetable.category%></h6></div>
               </h5>
               <p class="card-text mt-2">&#8377;<%= vegetable.price.toLocaleString("en-IN") %> / kg <br><% if(vegetable.quantity === 0) {%> <b style="color: red;"> Out of stock.</b><%}%></p>
               <a href="/vegetables/<%= vegetable._id %>" class="btn btn-primary mt-2 see-btn">See Details</a>
