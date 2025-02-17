@@ -171,15 +171,27 @@ body {
     color: #222222 !important;
 }
 #sortOptions{
-    margin-left: 700px !important;
+    margin-left: 850px !important;
     margin-bottom: 40px !important;
     margin-top: -70px !important;
     /* padding-left: 50px !important ; */
     padding: 50px,0,50px,0!important;
+    width: 170px !important;
+    height: 40px !important;
 }
 #categoryOptions{
-    margin-left: 50px !important;
+    margin-left: 40px !important;
     margin-top: -70px !important;
-    width: 200px !important;
-    height: 50px !important;
+    width: 170px !important;
+    height: 40px !important;
+}
+#translate{
+    /* margin-left: 3px !important; */
+}
+.fc{
+    margin-left: 0 !important;
+    padding-left: 0 !important ;
+}
+.fd{
+    margin-left: 20px !important;
 }
