@@ -15,7 +15,6 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <% } %>
             <tbody>
                 <% let grandTotal = 0; %>
                 <% for (let cartItem of cart.items) { %>
@@ -45,6 +44,26 @@
         </table>
 
         <h4><b>Grand Total: ₹<%= grandTotal.toLocaleString("en-IN") %></b></h4>
-        <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_Pvzyq92eB3oQGA" async> </script> </form>
-  
+
+        <!-- Address Form -->
+        <form action="/cart/checkout" method="POST">
+            <div class="form-group">
+                <label for="address">Enter your Address:</label>
+                <textarea name="address" id="address" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-success">Proceed to Checkout</button>
+            </div>
+        </form>
+
+        <br>
+        <!-- Razorpay payment button -->
+        <form>
+            <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_Pvzyq92eB3oQGA" async> </script> 
+        </form>
+
+    <% } else { %>
+        <p>Your cart is empty. Please add some items to your cart.</p>
+    <% } %>
 </div>

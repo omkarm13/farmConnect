@@ -16,7 +16,7 @@ const vegetableSchema = new Schema({
     location: String,
     category: {
       type: String,
-      enum: ['roots', 'leaves', 'pods', 'flowers'],
+      enum: ['roots', 'leaves', 'pods', 'flowers','fruits'],
       required: true,
     },
     quantity: {  // Add stock quantity

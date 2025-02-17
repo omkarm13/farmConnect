@@ -166,3 +166,7 @@ body {
 .hover-text-red:hover {
     color: red !important;
 }
+.text-muted-helper{
+    size: 200% !important;
+    color: #222222 !important;
+}

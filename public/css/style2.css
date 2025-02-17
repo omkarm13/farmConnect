@@ -524,3 +524,12 @@
   color: white !important;
   
 }
+.help{
+  margin-right: 2px !important;
+  text-decoration: none !important;
+  margin-left: 2px !important;
+}
+.helper{
+  margin-top: 0% !important;
+  margin-bottom:5px !important ;
+}
