@@ -36,29 +36,105 @@ module.exports.viewOrders = TryCatch(async (req, res) => {
 });
 
 //assignOrder
+// module.exports.assignOrders = TryCatch(async (req, res) => {
+//     const { id } = req.params;
+//     const { deliveryBoyId } = req.body;
+
+//     const order = await Order.findById(id);
+//     if (!order) {
+//         req.flash("error", "Order not found!");
+//         return res.redirect("/admin/orders");
+//     };
+
+//     if (order.status === "Delivered") {
+//         req.flash("error", "Cannot assign a delivered order!");
+//         return res.redirect("/admin/orders");
+//     };
+
+
+//     await Order.findByIdAndUpdate(id, { assignedTo: deliveryBoyId, status: "Assigned" });
+//     req.flash("success", "Order assigned to Delivery Boy!");
+//     res.redirect("/admin/orders");
+// });
+
+// assignOrder2
+// module.exports.assignOrders = TryCatch(async (req, res) => {
+//     const { id } = req.params;
+//     const order = await Order.findById(id);
+
+//     if (!order) {
+//         req.flash("error", "Order not found!");
+//         return res.redirect("/admin/orders");
+//     }
+
+//     if (order.status === "Delivered") {
+//         req.flash("error", "Cannot assign a delivered order!");
+//         return res.redirect("/admin/orders");
+//     }
+
+//     // Find the delivery boy with the least assigned orders
+//     const deliveryBoy = await User.findOne({ role: "delivery_boy" })
+//         .sort({ assignedOrders: 1 }) // Get the one with the least orders
+//         .exec();
+
+//     if (!deliveryBoy) {
+//         req.flash("error", "No delivery boys available!");
+//         return res.redirect("/admin/orders");
+//     }
+
+//     // Assign the order
+//     order.assignedTo = deliveryBoy._id;
+//     order.status = "Assigned";
+//     await order.save();
+
+//     // Update the delivery boy's assigned order count
+//     await User.findByIdAndUpdate(deliveryBoy._id, { $inc: { assignedOrders: 1 } });
+
+//     req.flash("success", `Order assigned to ${deliveryBoy.name}`);
+//     res.redirect("/admin/orders");
+// });
+
+//assign order 3
 module.exports.assignOrders = TryCatch(async (req, res) => {
     const { id } = req.params;
-    const { deliveryBoyId } = req.body;
-
     const order = await Order.findById(id);
+
     if (!order) {
         req.flash("error", "Order not found!");
         return res.redirect("/admin/orders");
-    };
+    }
 
     if (order.status === "Delivered") {
-        req.flash("error", "Cannot assign a delivered order!");
+        req.flash("error", "Cannot reassign a delivered order!");
         return res.redirect("/admin/orders");
-    };
+    }
 
+    // Find the delivery boy with the least assigned orders
+    const deliveryBoy = await User.findOne({ role: "delivery_boy" })
+        .sort({ assignedOrders: 1 })
+        .exec();
 
-    await Order.findByIdAndUpdate(id, { assignedTo: deliveryBoyId, status: "Assigned" });
-    req.flash("success", "Order assigned to Delivery Boy!");
+    if (!deliveryBoy) {
+        req.flash("error", "No delivery boys available!");
+        return res.redirect("/admin/orders");
+    }
+
+    // Remove old delivery boy assignment count if it was previously assigned
+    if (order.assignedTo) {
+        await User.findByIdAndUpdate(order.assignedTo, { $inc: { assignedOrders: -1 } });
+    }
+
+    // Assign to new delivery boy
+    order.assignedTo = deliveryBoy._id;
+    order.status = "Assigned";
+    await order.save();
+
+    // Update the new delivery boy's assigned order count
+    await User.findByIdAndUpdate(deliveryBoy._id, { $inc: { assignedOrders: 1 } });
+
+    req.flash("success", `Order reassigned to ${deliveryBoy.name}`);
     res.redirect("/admin/orders");
 });
-
-
-
 
 
 

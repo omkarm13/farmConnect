@@ -21,6 +21,11 @@ const userSchema = new Schema({
       required: true,
     },
     address: String,
+    assignedOrders: { 
+      type: Number, 
+      default: 0, 
+      required: function() { return this.role === "delivery_boy"; } // Only for delivery boys
+    },
   },
   {
     timestamps: true,

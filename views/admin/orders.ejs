@@ -15,7 +15,7 @@
                     <th>Total Amount</th>
                     <th>Status</th>
                     <th>Delivery Boy</th>
-                    <th>Assign</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,13 +42,9 @@
                             <% if (order.status === "Delivered") { %>
                                 <button class="btn btn-secondary btn-sm" disabled>Delivered</button>
                             <% } else { %>
+                                <!-- Reassign Button -->
                                 <form action="/admin/orders/<%= order._id %>/assign" method="POST">
-                                    <select name="deliveryBoyId" class="form-select">
-                                        <% for (deliveryBoy of deliveryBoys) { %>
-                                            <option value="<%= deliveryBoy._id %>"><%= deliveryBoy.name %></option>
-                                        <% } %>
-                                    </select>
-                                    <button type="submit" class="btn btn-primary btn-sm mt-2">Assign</button>
+                                    <button type="submit" class="btn btn-warning btn-sm">Reassign</button>
                                 </form>
                             <% } %>
                         </td>
