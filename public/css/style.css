@@ -170,3 +170,16 @@ body {
     size: 200% !important;
     color: #222222 !important;
 }
+#sortOptions{
+    margin-left: 700px !important;
+    margin-bottom: 40px !important;
+    margin-top: -70px !important;
+    /* padding-left: 50px !important ; */
+    padding: 50px,0,50px,0!important;
+}
+#categoryOptions{
+    margin-left: 50px !important;
+    margin-top: -70px !important;
+    width: 200px !important;
+    height: 50px !important;
+}
