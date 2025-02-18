@@ -1,1 +1,1 @@
-product
+require('dotenv').config();

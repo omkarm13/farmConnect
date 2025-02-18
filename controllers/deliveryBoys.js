@@ -1,4 +1,4 @@
-
+const User = require("../models/user.js");
 const Order = require("../models/order.js");
 const TryCatch = require("../utils/TryCatch.js");
 const axios = require("axios");
@@ -49,9 +49,29 @@ module.exports.viewOrder = TryCatch(async (req, res) => {
 });
 
 //order status 
-module.exports.updateOrderStatus =  TryCatch(async (req, res) => {
+// module.exports.updateOrderStatus =  TryCatch(async (req, res) => {
+//     const { id } = req.params;
+//     await Order.findByIdAndUpdate(id, { status: "Delivered" });
+//     req.flash("success", "Order marked as Delivered!");
+//     res.redirect("/delivery/orders");
+// });
+
+//order status - 2
+module.exports.updateOrderStatus = TryCatch(async (req, res) => {
     const { id } = req.params;
-    await Order.findByIdAndUpdate(id, { status: "Delivered" });
+    const order = await Order.findById(id);
+
+    if (!order || order.status === "Delivered") {
+        req.flash("error", "Invalid order or already delivered!");
+        return res.redirect("/delivery/orders");
+    }
+
+    order.status = "Delivered";
+    await order.save();
+
+    // Reduce assigned orders count for delivery boy
+    await User.findByIdAndUpdate(order.assignedTo, { $inc: { assignedOrders: -1 } });
+
     req.flash("success", "Order marked as Delivered!");
     res.redirect("/delivery/orders");
 });
