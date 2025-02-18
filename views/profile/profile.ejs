@@ -10,9 +10,11 @@
 
                     <h3 class="card-title"><%= user.name %></h3>
                     <p class="text-muted"><i class="fa-solid fa-envelope"></i> <%= user.email %></p>
+                    <p class="text-muted"><i class="fa-solid fa-location-dot"></i> Address: <%= user.address %> </p>
                     <% if (roles === 'customer') { %>
                     <p class="text-muted"><i class="fa-solid fa-star"></i> Credit: 10 </p>
                     <% } %>
+                    
                 </div>
             </div>
         </div>
