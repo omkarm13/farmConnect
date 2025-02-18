@@ -3,8 +3,8 @@ maptilersdk.config.apiKey = mapToken;
 const map = new maptilersdk.Map({
     container: 'map',
     style: maptilersdk.MapStyle.STREETS,
-    center: [74.240533, 16.702841], // Default center
-    zoom: 8
+    center: [74.1850, 17.2853], // Default center
+    zoom: 9
 });
 
 // Add hub locations (Blue)
