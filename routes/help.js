@@ -7,5 +7,6 @@ const helpController = require("../controllers/helps.js");
 
 
 router.get("/", helpController.help);
+router.get("/chatbot", helpController.chatbot);
 
 module.exports = router;
